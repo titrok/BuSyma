@@ -57,7 +57,7 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 	@Override
 	public Context<Object> build(Context<Object> context) {
 		context.setId("BuSyma");
-		ArrayList<String> list = fileToList(System.getProperty("user.dir") + "/misc/test");
+		ArrayList<String> list = fileToList(System.getProperty("user.dir") + "/misc/map");
 		int width = list.size();
 		int height = list.get(0).length();
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);

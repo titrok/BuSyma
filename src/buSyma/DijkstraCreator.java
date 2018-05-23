@@ -122,7 +122,7 @@ public class DijkstraCreator {
 			System.out.println("No way was found from source to destination");
 		s.push(destination);
 		GridPoint next = predecessors[destination.getX()][destination.getY()];
-		while (next != null) {
+		while (next != source) {
 			s.push(next);
 			next = predecessors[next.getX()][next.getY()];
 		}
