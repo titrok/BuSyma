@@ -7,6 +7,10 @@
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
+      <string>buSyma.Crossing</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
+    <entry>
       <string>buSyma.Road</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
@@ -22,19 +26,23 @@
   <editedStyles>
     <entry>
       <string>buSyma.Human</string>
-      <string>buSyma.Human.style_0.xml</string>
+      <string>buSyma.Human.style_2.xml</string>
+    </entry>
+    <entry>
+      <string>buSyma.Crossing</string>
+      <string>buSyma.Crossing.style_1.xml</string>
     </entry>
     <entry>
       <string>buSyma.Road</string>
-      <string>buSyma.Road.style_7.xml</string>
+      <string>buSyma.Road.style_9.xml</string>
     </entry>
     <entry>
       <string>buSyma.Sidewalk</string>
-      <string>buSyma.Sidewalk.style_7.xml</string>
+      <string>buSyma.Sidewalk.style_9.xml</string>
     </entry>
     <entry>
       <string>buSyma.Spawn</string>
-      <string>buSyma.Spawn.style_5.xml</string>
+      <string>buSyma.Spawn.style_7.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -47,7 +55,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>2135023324</hashCode>
+    <hashCode>970710894</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>
@@ -55,6 +63,10 @@
   <layerOrder>
     <entry>
       <string>buSyma.Human</string>
+      <int>4</int>
+    </entry>
+    <entry>
+      <string>buSyma.Crossing</string>
       <int>3</int>
     </entry>
     <entry>

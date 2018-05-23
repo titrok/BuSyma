@@ -11,8 +11,6 @@ import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.context.space.grid.GridFactory;
 import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
-import repast.simphony.engine.watcher.Watch;
-import repast.simphony.engine.watcher.WatcherTriggerSchedule;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.random.RandomHelper;
@@ -40,7 +38,6 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 		swa.y = y;
 		context.add(obj);
 		grid.moveTo(obj, (int)x, (int)y);
-		
 	}
 	public ArrayList<String> fileToList(String str)
 	{
@@ -60,19 +57,21 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 	@Override
 	public Context<Object> build(Context<Object> context) {
 		context.setId("BuSyma");
-		int size = 50;
+		ArrayList<String> list = fileToList(System.getProperty("user.dir") + "/misc/test");
+		int width = list.size();
+		int height = list.get(0).length();
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		SideWalkAdder swa = new SideWalkAdder();
-		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space", context, swa, new repast.simphony.space.continuous.StrictBorders(), size, size);
+		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space", context, swa, new repast.simphony.space.continuous.StrictBorders(), width, height);
 		this.space = space;
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
-		Grid<Object> grid = gridFactory.createGrid("grid", context, new GridBuilderParameters<Object>(new StrictBorders(), new SimpleGridAdder<Object>(), true, size, size));
+		Grid<Object> grid = gridFactory.createGrid("grid", context, new GridBuilderParameters<Object>(new StrictBorders(), new SimpleGridAdder<Object>(), true, width, height));
 		this.grid = grid;
-		ArrayList<String> list = fileToList(System.getProperty("user.dir") + "/misc/test");
-		for (int i = 0; i < size; i++)
+		
+		for (int i = 0; i < height; i++)
 		{
-			float y = (size - 0.5f) - i;
-			for (int j = 0; j < size; j++)
+			float y = (height - 0.5f) - i;
+			for (int j = 0; j < width; j++)
 			{
 				float x = j + 0.5f;
 				if (list.get(i).charAt(j) == 'X')
@@ -81,16 +80,18 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 					add(context, space, grid, new Road(space, grid), x, y);
 				if (list.get(i).charAt(j) == 'S')
 					add(context, space, grid, new Spawn(space, grid), x, y);
+				if (list.get(i).charAt(j) == 'C')
+					add(context, space, grid, new Crossing(space, grid), x, y);
 			}
 		}
 		
-		for (int  i = 0; i < 10; i++)
-			addHuman(context, space, grid);
+		for (int  i = 0; i < 1; i++)
+			addHuman(context, space, grid, list);
 		this.context = context;
 		return context;
 	}
 	
-	public static void addHuman(Context context, ContinuousSpace<Object> space, Grid<Object> grid) {
+	public static void addHuman(Context context, ContinuousSpace<Object> space, Grid<Object> grid, ArrayList<String> map) {
 		SideWalkAdder swa = (SideWalkAdder)space.getAdder();
 		GridCellNgh<Spawn> nghSpawnCreator = new GridCellNgh<Spawn>(grid, new GridPoint(0,0), Spawn.class, 50, 50);
 		List<GridCell<Spawn>> spawnGridCells = nghSpawnCreator.getNeighborhood(true);
@@ -110,6 +111,8 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 				dest = cell.getPoint();
 			}
 		}
-		add(context, space, grid, new Human(space, grid, dest, context), spawn.getX(), spawn.getY());
+		Human h = new Human(space, grid, dest, context, map);
+		add(context, space, grid, h, spawn.getX(), spawn.getY());
+		h.initDijkstra();
 	}
 }
