@@ -47,9 +47,7 @@ public class DijkstraCreator {
 	}
 	
 	private boolean isPracticable(GridPoint g) {
-		System.out.println(g);
 		char c = getChar(g);
-		System.out.println(c);
 		return c != 'R';
 	}
 	
@@ -83,7 +81,6 @@ public class DijkstraCreator {
 		seen.add(g);
 		if (isFinished())
 			return true;
-		System.out.println("Current point : " + g + "Destination : " + destination);
 		GridCellNgh<Object> nghCreator = new GridCellNgh<Object>(grid, g, Object.class, 1, 1);
 		List<GridCell<Object>> gridCells = nghCreator.getNeighborhood(true);
 		for (GridCell<Object> cell : gridCells) {
@@ -125,7 +122,7 @@ public class DijkstraCreator {
 		while (next != source) {
 			s.push(next);
 			next = predecessors[next.getX()][next.getY()];
-		}
+		}	
 		return s;
 	}
 }
