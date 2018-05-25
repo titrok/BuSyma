@@ -26,6 +26,10 @@
       <string>buSyma.Spawn</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
+    <entry>
+      <string>buSyma.Bus</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
   </styles>
   <editedStyles>
     <entry>
@@ -52,6 +56,10 @@
       <string>buSyma.Spawn</string>
       <string>buSyma.Spawn.style_7.xml</string>
     </entry>
+    <entry>
+      <string>buSyma.Bus</string>
+      <string>buSyma.Bus.style_1.xml</string>
+    </entry>
   </editedStyles>
   <netStyles/>
   <editedNetStyles/>
@@ -63,7 +71,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-2125984373</hashCode>
+    <hashCode>-1549348163</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>
@@ -75,7 +83,7 @@
     </entry>
     <entry>
       <string>buSyma.Human</string>
-      <int>5</int>
+      <int>6</int>
     </entry>
     <entry>
       <string>buSyma.Crossing</string>
@@ -92,6 +100,10 @@
     <entry>
       <string>buSyma.Spawn</string>
       <int>1</int>
+    </entry>
+    <entry>
+      <string>buSyma.Bus</string>
+      <int>5</int>
     </entry>
   </layerOrder>
   <projections>

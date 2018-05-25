@@ -7,7 +7,7 @@
 									
 		/>
 				<parameter name="mapName" displayName="Map Name" type="java.lang.String" 
-						defaultValue="final" 
+						defaultValue="test" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
 									

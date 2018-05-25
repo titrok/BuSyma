@@ -20,13 +20,14 @@ public class DijkstraCreator {
 	private Grid<Object> grid;
 	private Stack<GridPoint> way = null;
 	private Set<GridPoint> seen = new HashSet<GridPoint>(); 
-	
-	public DijkstraCreator(GridPoint source , ArrayList<String> map, Grid<Object> grid) {
+	private Object object;
+	public DijkstraCreator(GridPoint source , ArrayList<String> map, Grid<Object> grid, Object o) {
 		this.source = source;
 		this.map = map;
 		this.height = map.size();
 		this.width = map.get(0).length();
 		this.grid = grid;
+		this.object = o;
 		initialize();
 	}
 	
@@ -48,6 +49,8 @@ public class DijkstraCreator {
 	
 	private boolean isPracticable(GridPoint g) {
 		char c = getChar(g);
+		if (this.object instanceof Bus)
+			return c == 'R';
 		return c != 'R';
 	}
 	

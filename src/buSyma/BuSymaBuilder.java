@@ -33,11 +33,14 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 	private Grid<Object> grid;
 	private ContinuousSpace<Object> space;
 	private Context<Object> context;
+	private int height;
+	private int width;
+	
 	
 	public static void add(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid, Object obj, float x, float y) {
 		SideWalkAdder swa = (SideWalkAdder)space.getAdder();
-		swa.x = x;
-		swa.y = y;
+		swa.x = x + 0.5f;
+		swa.y = y + 0.5f;
 		context.add(obj);
 		grid.moveTo(obj, (int)x, (int)y);
 	}
@@ -62,8 +65,8 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 		String mapName = RunEnvironment.getInstance().getParameters().getString("mapName");
 		ArrayList<String> list = fileToList(System.getProperty("user.dir") + "/misc/" + mapName);
 		Collections.reverse(list);
-		int height = list.size();
-		int width= list.get(0).length();
+		this.height = list.size();
+		this.width= list.get(0).length();
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		SideWalkAdder swa = new SideWalkAdder();
 		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space", context, swa, new repast.simphony.space.continuous.StrictBorders(), width, height);
@@ -74,10 +77,10 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 		
 		for (int i = 0; i < height; i++)
 		{
-			float y = i + 0.5f;
+			float y = i;
 			for (int j = 0; j < width; j++)
 			{
-				float x = j + 0.5f;
+				float x = j;
 				if (list.get(i).charAt(j) == 'X')
 					add(context, space, grid, new Sidewalk(space, grid), x, y);
 				if (list.get(i).charAt(j) == 'R')
@@ -93,8 +96,19 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 		
 		for (int  i = 0; i < 1; i++)
 			addHuman(context, space, grid, list);
+		addBus(context, space, grid, list);
 		this.context = context;
 		return context;
+	}
+	
+	public static void addBus(Context context, ContinuousSpace<Object> space, Grid<Object> grid, ArrayList<String> map) {
+		SideWalkAdder swa = (SideWalkAdder)space.getAdder();
+		GridPoint spawn = new GridPoint(0, 9);
+		GridPoint dest = new GridPoint(19, 9);
+		
+		Bus b = new Bus(space, grid, dest, context, map);
+		add(context, space, grid, b, spawn.getX(), spawn.getY());
+		b.initDijkstra();
 	}
 	
 	public static void addHuman(Context context, ContinuousSpace<Object> space, Grid<Object> grid, ArrayList<String> map) {
