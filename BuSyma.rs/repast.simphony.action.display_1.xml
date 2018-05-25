@@ -3,6 +3,10 @@
   <type>2D</type>
   <styles>
     <entry>
+      <string>buSyma.BusShelter</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+    </entry>
+    <entry>
       <string>buSyma.Human</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
@@ -24,6 +28,10 @@
     </entry>
   </styles>
   <editedStyles>
+    <entry>
+      <string>buSyma.BusShelter</string>
+      <string>buSyma.BusShelter.style_0.xml</string>
+    </entry>
     <entry>
       <string>buSyma.Human</string>
       <string>buSyma.Human.style_2.xml</string>
@@ -55,31 +63,35 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>970710894</hashCode>
+    <hashCode>-2125984373</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
+      <string>buSyma.BusShelter</string>
+      <int>0</int>
+    </entry>
+    <entry>
       <string>buSyma.Human</string>
-      <int>4</int>
+      <int>5</int>
     </entry>
     <entry>
       <string>buSyma.Crossing</string>
-      <int>3</int>
+      <int>4</int>
     </entry>
     <entry>
       <string>buSyma.Road</string>
-      <int>2</int>
+      <int>3</int>
     </entry>
     <entry>
       <string>buSyma.Sidewalk</string>
-      <int>1</int>
+      <int>2</int>
     </entry>
     <entry>
       <string>buSyma.Spawn</string>
-      <int>0</int>
+      <int>1</int>
     </entry>
   </layerOrder>
   <projections>

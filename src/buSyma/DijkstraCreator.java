@@ -52,35 +52,23 @@ public class DijkstraCreator {
 	}
 	
 	private char getChar(GridPoint ngh) {
-		return map.get(height - ngh.getY() - 1).charAt(ngh.getX());
+		
+		char c = map.get(ngh.getY()).charAt(ngh.getX());
+		return c;
 	}
 	
-	private boolean update(GridPoint g, GridPoint ngh) {
+	private void update(GridPoint g, GridPoint ngh) {
 		if (isInRange(ngh) && isPracticable(ngh)) {
-			char c = getChar(ngh);
-			if (c == 'C' || c == 'S' || c == 'X') {
-				if (distance[ngh.getX()][ngh.getY()] > distance[g.getX()][g.getY()] + 1) {
-					distance[ngh.getX()][ngh.getY()] = distance[g.getX()][g.getY()] + 1;
+			int dist = Math.abs(ngh.getX() - g.getX()) + Math.abs(ngh.getY() - g.getY());
+				if (distance[ngh.getX()][ngh.getY()] > distance[g.getX()][g.getY()] + dist) {
+					distance[ngh.getX()][ngh.getY()] = distance[g.getX()][g.getY()] + dist;
 					predecessors[ngh.getX()][ngh.getY()] = g;
-					return true;
-				}
 			}
 		}
-		return false;
-	}
-	
-	private boolean isFinished() {
-		for (int i = 0; i < width; i++)
-			for (int j = 0; j < height; j++)
-				if (isPracticable(grid.getLocation(grid.getObjectAt(i,j))) && !seen.contains(grid.getLocation(grid.getObjectAt(i,j))))
-					return false;
-		return true;
 	}
 	
 	private boolean parcours(GridPoint g, GridPoint destination) {
 		seen.add(g);
-		if (isFinished())
-			return true;
 		GridCellNgh<Object> nghCreator = new GridCellNgh<Object>(grid, g, Object.class, 1, 1);
 		List<GridCell<Object>> gridCells = nghCreator.getNeighborhood(true);
 		for (GridCell<Object> cell : gridCells) {
@@ -116,12 +104,15 @@ public class DijkstraCreator {
 	private Stack<GridPoint> findWay(GridPoint destination) {
 		Stack<GridPoint> s = new Stack<GridPoint>();
 		if (!parcours(source, destination))
+		{
 			System.out.println("No way was found from source to destination");
+			return s;
+		}
 		s.push(destination);
-		GridPoint next = predecessors[destination.getX()][destination.getY()];
-		while (next != source) {
-			s.push(next);
-			next = predecessors[next.getX()][next.getY()];
+		GridPoint prev = predecessors[destination.getX()][destination.getY()];
+		while (prev != source && prev != null) {
+			s.push(prev);
+			prev = predecessors[prev.getX()][prev.getY()];
 		}	
 		return s;
 	}

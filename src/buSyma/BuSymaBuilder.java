@@ -2,6 +2,7 @@ package buSyma;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,6 +12,7 @@ import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.context.space.grid.GridFactory;
 import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.random.RandomHelper;
@@ -57,9 +59,11 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 	@Override
 	public Context<Object> build(Context<Object> context) {
 		context.setId("BuSyma");
-		ArrayList<String> list = fileToList(System.getProperty("user.dir") + "/misc/test");
-		int width = list.size();
-		int height = list.get(0).length();
+		String mapName = RunEnvironment.getInstance().getParameters().getString("mapName");
+		ArrayList<String> list = fileToList(System.getProperty("user.dir") + "/misc/" + mapName);
+		Collections.reverse(list);
+		int height = list.size();
+		int width= list.get(0).length();
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		SideWalkAdder swa = new SideWalkAdder();
 		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space", context, swa, new repast.simphony.space.continuous.StrictBorders(), width, height);
@@ -70,7 +74,7 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 		
 		for (int i = 0; i < height; i++)
 		{
-			float y = (height - 0.5f) - i;
+			float y = i + 0.5f;
 			for (int j = 0; j < width; j++)
 			{
 				float x = j + 0.5f;
@@ -82,6 +86,8 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 					add(context, space, grid, new Spawn(space, grid), x, y);
 				if (list.get(i).charAt(j) == 'C')
 					add(context, space, grid, new Crossing(space, grid), x, y);
+				if (list.get(i).charAt(j) == 'A')
+					add(context, space, grid, new BusShelter(space, grid), x, y);
 			}
 		}
 		
