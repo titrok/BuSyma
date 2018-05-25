@@ -91,6 +91,8 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 					add(context, space, grid, new Crossing(space, grid), x, y);
 				if (list.get(i).charAt(j) == 'A')
 					add(context, space, grid, new BusShelter(space, grid), x, y);
+				if (list.get(i).charAt(j) == 'T')
+					add(context, space, grid, new TrafficLight(space, grid), x, y);
 			}
 		}
 		
@@ -104,16 +106,16 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 	public static void addBus(Context context, ContinuousSpace<Object> space, Grid<Object> grid, ArrayList<String> map) {
 		SideWalkAdder swa = (SideWalkAdder)space.getAdder();
 		GridPoint spawn = new GridPoint(0, 9);
-		GridPoint dest = new GridPoint(19, 9);
+		GridPoint dest = new GridPoint(18, 9);
 		
 		Bus b = new Bus(space, grid, dest, context, map);
-		add(context, space, grid, b, spawn.getX(), spawn.getY());
+		add(context, space, grid, b, (int)spawn.getX(), (int)spawn.getY());
 		b.initDijkstra();
 	}
 	
 	public static void addHuman(Context context, ContinuousSpace<Object> space, Grid<Object> grid, ArrayList<String> map) {
 		SideWalkAdder swa = (SideWalkAdder)space.getAdder();
-		GridCellNgh<Spawn> nghSpawnCreator = new GridCellNgh<Spawn>(grid, new GridPoint(0,0), Spawn.class, 50, 50);
+		GridCellNgh<Spawn> nghSpawnCreator = new GridCellNgh<Spawn>(grid, new GridPoint(0,0), Spawn.class, map.get(0).length(), map.size());
 		List<GridCell<Spawn>> spawnGridCells = nghSpawnCreator.getNeighborhood(true);
 		SimUtilities.shuffle(spawnGridCells, RandomHelper.getUniform());
 		GridPoint spawn = null;
@@ -122,7 +124,7 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 				spawn = cell.getPoint();
 			}
 		}
-		GridCellNgh<Sidewalk> nghCreator = new GridCellNgh<Sidewalk>(grid, new GridPoint(0,0), Sidewalk.class, 50, 50);
+		GridCellNgh<Sidewalk> nghCreator = new GridCellNgh<Sidewalk>(grid, new GridPoint(0,0), Sidewalk.class, map.get(0).length(), map.size());
 		List<GridCell<Sidewalk>> gridCells = nghCreator.getNeighborhood(true);
 		SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
 		GridPoint dest = null;

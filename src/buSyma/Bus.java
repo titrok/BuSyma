@@ -14,7 +14,18 @@ public class Bus extends Moving{
 		this.destination = dest;
 		this.context = context;
 		this.map = map;
-		this.speed = 1.5f;
+		this.speed = 1f;
 	}
 
+	public boolean canCross(TrafficLight t) {
+		return (!t.red && t.timer < 5);
+	}
+	
+	public boolean canCross(Crossing c) {
+		return true;
+	}
+	public void despawn() {
+		context.remove(this);
+		BuSymaBuilder.addBus(context, space, grid, map);
+	}
 }

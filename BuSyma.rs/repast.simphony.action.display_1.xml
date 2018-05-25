@@ -1,7 +1,11 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor simphonyVersion="2.5.0">
-  <name>City Display</name>
+  <name>New Display</name>
   <type>2D</type>
   <styles>
+    <entry>
+      <string>buSyma.TrafficLight</string>
+      <string>buSyma.TrafficLightStyle</string>
+    </entry>
     <entry>
       <string>buSyma.BusShelter</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
@@ -33,32 +37,36 @@
   </styles>
   <editedStyles>
     <entry>
+      <string>buSyma.TrafficLight</string>
+      <null/>
+    </entry>
+    <entry>
       <string>buSyma.BusShelter</string>
-      <string>buSyma.BusShelter.style_0.xml</string>
+      <string>buSyma.BusShelter.style_2.xml</string>
     </entry>
     <entry>
       <string>buSyma.Human</string>
-      <string>buSyma.Human.style_2.xml</string>
+      <string>buSyma.Human.style_3.xml</string>
     </entry>
     <entry>
       <string>buSyma.Crossing</string>
-      <string>buSyma.Crossing.style_1.xml</string>
+      <string>buSyma.Crossing.style_2.xml</string>
     </entry>
     <entry>
       <string>buSyma.Road</string>
-      <string>buSyma.Road.style_9.xml</string>
+      <string>buSyma.Road.style_10.xml</string>
     </entry>
     <entry>
       <string>buSyma.Sidewalk</string>
-      <string>buSyma.Sidewalk.style_9.xml</string>
+      <string>buSyma.Sidewalk.style_10.xml</string>
     </entry>
     <entry>
       <string>buSyma.Spawn</string>
-      <string>buSyma.Spawn.style_7.xml</string>
+      <string>buSyma.Spawn.style_8.xml</string>
     </entry>
     <entry>
       <string>buSyma.Bus</string>
-      <string>buSyma.Bus.style_1.xml</string>
+      <string>buSyma.Bus.style_2.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -71,19 +79,23 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1549348163</hashCode>
+    <hashCode>-1474385872</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
+      <string>buSyma.TrafficLight</string>
+      <int>5</int>
+    </entry>
+    <entry>
       <string>buSyma.BusShelter</string>
-      <int>0</int>
+      <int>2</int>
     </entry>
     <entry>
       <string>buSyma.Human</string>
-      <int>6</int>
+      <int>7</int>
     </entry>
     <entry>
       <string>buSyma.Crossing</string>
@@ -95,15 +107,15 @@
     </entry>
     <entry>
       <string>buSyma.Sidewalk</string>
-      <int>2</int>
-    </entry>
-    <entry>
-      <string>buSyma.Spawn</string>
       <int>1</int>
     </entry>
     <entry>
+      <string>buSyma.Spawn</string>
+      <int>0</int>
+    </entry>
+    <entry>
       <string>buSyma.Bus</string>
-      <int>5</int>
+      <int>6</int>
     </entry>
   </layerOrder>
   <projections>

@@ -50,7 +50,7 @@ public class DijkstraCreator {
 	private boolean isPracticable(GridPoint g) {
 		char c = getChar(g);
 		if (this.object instanceof Bus)
-			return c == 'R';
+			return c == 'R' || c == 'T' || c == 'C';
 		return c != 'R';
 	}
 	
