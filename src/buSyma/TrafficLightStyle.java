@@ -3,8 +3,6 @@ package buSyma;
 import java.awt.Color;
 
 
-import saf.v3d.scene.Appearance;
-
 import repast.simphony.gis.styleEditor.SimpleMarkFactory;
 import repast.simphony.visualizationOGL2D.DefaultStyleOGL2D;
 import saf.v3d.ShapeFactory2D;

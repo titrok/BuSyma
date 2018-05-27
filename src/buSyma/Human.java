@@ -7,9 +7,7 @@ import repast.simphony.context.Context;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
-import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 public class Human extends Moving{
@@ -38,5 +36,17 @@ public class Human extends Moving{
 			if (light.items().iterator().hasNext() && !canCross(light.items().iterator().next()))
 				return false;
 		return true;
+	}
+
+	@ScheduledMethod(start=1, interval=1)
+	public void moveTowardsDestination() {
+		if (super.computeNextGoal())
+			return;
+		Object o = grid.getObjectAt(currentGoal.getX(), currentGoal.getY());
+		if (o instanceof Crossing && !canCross((Crossing)o))
+			return;
+		if (o instanceof TrafficLight && !canCross((TrafficLight)o))
+			return;
+		super.moveTowardsDestination();
 	}
 }

@@ -1,17 +1,11 @@
 package buSyma;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
-import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.grid.Grid;
 
 public class TrafficLight {
-	private ContinuousSpace<Object> space;
-	private Grid<Object> grid;
 	public boolean red;
 	public int timer = 0;
-	public TrafficLight(ContinuousSpace<Object> space, Grid<Object> grid) {
-		this.space = space;
-		this.grid = grid;
+	public TrafficLight() {
 		this.red = true;
 	}
 	
