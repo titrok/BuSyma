@@ -102,7 +102,9 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 	}
 	
 	public static void addHuman(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid, ArrayList<String> map) {
-		GridCellNgh<Spawn> nghSpawnCreator = new GridCellNgh<Spawn>(grid, new GridPoint(0,0), Spawn.class, map.get(0).length(), map.size());
+		int height = map.size();
+		int width = map.get(0).length();
+		GridCellNgh<Spawn> nghSpawnCreator = new GridCellNgh<Spawn>(grid, new GridPoint(0,0), Spawn.class, width, height);
 		List<GridCell<Spawn>> spawnGridCells = nghSpawnCreator.getNeighborhood(true);
 		SimUtilities.shuffle(spawnGridCells, RandomHelper.getUniform());
 		GridPoint spawn = null;
@@ -111,13 +113,28 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 				spawn = cell.getPoint();
 			}
 		}
-		GridCellNgh<Sidewalk> nghCreator = new GridCellNgh<Sidewalk>(grid, new GridPoint(0,0), Sidewalk.class, map.get(0).length(), map.size());
+		GridCellNgh<Sidewalk> nghCreator = new GridCellNgh<Sidewalk>(grid, new GridPoint(0,0), Sidewalk.class, width, height);
 		List<GridCell<Sidewalk>> gridCells = nghCreator.getNeighborhood(true);
 		SimUtilities.shuffle(gridCells, RandomHelper.getUniform());
 		GridPoint dest = null;
 		for (GridCell<Sidewalk> cell : gridCells) {
 			if (cell.size() > 0) {
 				dest = cell.getPoint();
+			}
+		}
+		if (dest.getX() == width - 1 || dest.getX() == 0 || dest.getY() == height - 1 || dest.getY() == 0) {
+			double distance = Double.MAX_VALUE;
+			GridCellNgh<BusShelter> shelterCreator = new GridCellNgh<BusShelter>(grid, new GridPoint(0,0), BusShelter.class, width, height);
+			List<GridCell<BusShelter>> shelterGridCells = shelterCreator.getNeighborhood(true);
+			for (GridCell<BusShelter> shelter : shelterGridCells) {
+				if (shelter.size() > 0) {
+					GridPoint d = shelter.getPoint();
+					if (Math.sqrt(Math.pow(d.getX() - spawn.getX(), 2) + Math.pow(d.getY() - spawn.getY(), 2)) < distance) {
+						distance = Math.sqrt(Math.pow(d.getX() - spawn.getX(), 2) + Math.pow(d.getY() - spawn.getY(), 2));
+						dest = d;
+						
+					}
+				}
 			}
 		}
 		Human h = new Human(space, grid, dest, context, map);

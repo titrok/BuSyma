@@ -12,6 +12,8 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 
 public class Bus extends Moving{
+	private boolean shouldMove = true;
+	private int timeStopped = 0;
 	public Bus(ContinuousSpace<Object> space, Grid<Object> grid, GridPoint dest, Context<Object> context, ArrayList<String> map) {
 		this.space = space;
 		this.grid = grid;
@@ -30,15 +32,27 @@ public class Bus extends Moving{
 	}
 	
 	public boolean shouldStop() {
+		if (!shouldMove) {
+			timeStopped++;
+			if (timeStopped > 3) {
+				shouldMove = true;
+				timeStopped = 0;
+				return false;
+			}
+			return true;
+		}
 		GridPoint pt = grid.getLocation(this);
 		GridCellNgh<BusShelter> nghShelterCreator = new GridCellNgh<BusShelter>(grid, pt, BusShelter.class, 1, 1);
 		List<GridCell<BusShelter>> shelterGridCells = nghShelterCreator.getNeighborhood(false);
 		for (GridCell<BusShelter> shelter : shelterGridCells) {
-			if (!shelter.items().iterator().hasNext())
-				return false;
-			GridPoint s = shelter.getPoint();
-			if (Math.abs(s.getX() - pt.getX()) + Math.abs(s.getY() - pt.getY()) == 1)
-				return true;
+			if (shelter.items().iterator().hasNext()) {
+				BusShelter s = shelter.items().iterator().next();
+				GridPoint ps = grid.getLocation(s);
+				if (Math.abs(ps.getX() - pt.getX()) + Math.abs(ps.getY() - pt.getY()) == 1) {
+					shouldMove = false;
+					return true;
+				}
+			}
 		}
 		return false;
 	}
