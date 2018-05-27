@@ -88,15 +88,13 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 		}
 		
 		addHuman(context, space, grid, list);
-		addBus(context, space, grid, list);
+		addBus(context, space, grid, list, new GridPoint(0, 10), new GridPoint(18, 10));
+		addBus(context, space, grid, list, new GridPoint(9, 18), new GridPoint(9, 0));
 		return context;
 	}
 	
-	public static void addBus(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid, ArrayList<String> map) {
-		GridPoint spawn = new GridPoint(0, 10);
-		GridPoint dest = new GridPoint(18, 10);
-		
-		Bus b = new Bus(space, grid, dest, context, map);
+	public static void addBus(Context<Object> context, ContinuousSpace<Object> space, Grid<Object> grid, ArrayList<String> map, GridPoint spawn, GridPoint dest) {
+		Bus b = new Bus(space, grid, dest, context, map, spawn);
 		add(context, space, grid, b, (int)spawn.getX(), (int)spawn.getY());
 		b.initDijkstra();
 	}

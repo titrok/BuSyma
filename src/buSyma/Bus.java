@@ -14,21 +14,23 @@ import repast.simphony.space.grid.GridPoint;
 public class Bus extends Moving{
 	private boolean shouldMove = true;
 	private int timeStopped = 0;
-	public Bus(ContinuousSpace<Object> space, Grid<Object> grid, GridPoint dest, Context<Object> context, ArrayList<String> map) {
+	private GridPoint spawn;
+	public Bus(ContinuousSpace<Object> space, Grid<Object> grid, GridPoint dest, Context<Object> context, ArrayList<String> map, GridPoint spawn) {
 		this.space = space;
 		this.grid = grid;
 		this.destination = dest;
 		this.context = context;
 		this.map = map;
 		this.speed = 1f;
+		this.spawn = spawn;
 	}
 
 	public boolean canCross(TrafficLight t) {
 		return (!t.red && t.timer < 5);
 	}
 	public void despawn() {
+		BuSymaBuilder.addBus(context, space, grid, map, spawn, destination);
 		context.remove(this);
-		BuSymaBuilder.addBus(context, space, grid, map);
 	}
 	
 	public boolean shouldStop() {
