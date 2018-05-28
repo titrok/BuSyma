@@ -11,6 +11,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 public class Human extends Moving{
+	private boolean isCrossing = false;
 	public Human(ContinuousSpace<Object> space, Grid<Object> grid, GridPoint dest, Context<Object> context, ArrayList<String> map) {
 		this.space = space;
 		this.grid = grid;
@@ -30,11 +31,14 @@ public class Human extends Moving{
 	}
 	
 	public boolean canCross(Crossing c) {
+		if (isCrossing)
+			return true;
 		GridCellNgh<TrafficLight> nghSpawnCreator = new GridCellNgh<TrafficLight>(grid, currentGoal, TrafficLight.class, 1, 1);
 		List<GridCell<TrafficLight>> lightGridCells = nghSpawnCreator.getNeighborhood(true);
 		for (GridCell<TrafficLight> light : lightGridCells)
 			if (light.items().iterator().hasNext() && !canCross(light.items().iterator().next()))
 				return false;
+		isCrossing = true;
 		return true;
 	}
 
@@ -45,6 +49,7 @@ public class Human extends Moving{
 		Object o = grid.getObjectAt(currentGoal.getX(), currentGoal.getY());
 		if (o instanceof Crossing && !canCross((Crossing)o))
 			return;
+		isCrossing = o instanceof Crossing;
 		if (o instanceof TrafficLight && !canCross((TrafficLight)o))
 			return;
 		super.moveTowardsDestination();
