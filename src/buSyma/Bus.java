@@ -12,9 +12,10 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 
 public class Bus extends Moving{
-	private boolean shouldMove = true;
+	public boolean shouldMove = true;
 	private int timeStopped = 0;
 	private GridPoint spawn;
+	public int passengers = 0;
 	public Bus(ContinuousSpace<Object> space, Grid<Object> grid, GridPoint dest, Context<Object> context, ArrayList<String> map, GridPoint spawn) {
 		this.space = space;
 		this.grid = grid;
@@ -26,7 +27,8 @@ public class Bus extends Moving{
 	}
 
 	public boolean canCross(TrafficLight t) {
-		return (!t.red && t.timer < 5);
+		t.busses.add(this);
+		return (!t.red);
 	}
 	public void despawn() {
 		BuSymaBuilder.addBus(context, space, grid, map, spawn, destination);
@@ -61,6 +63,10 @@ public class Bus extends Moving{
 	
 	@ScheduledMethod(start=1, interval=1)
 	public void moveTowardsDestination() {
+		GridPoint pt = grid.getLocation(this);
+		Object t = grid.getObjectAt(pt.getX(), pt.getY());
+		if (t instanceof TrafficLight && ((TrafficLight)t).busses.contains(this))
+			((TrafficLight)t).busses.remove(this);
 		if (super.computeNextGoal())
 			return;
 		Object o = grid.getObjectAt(currentGoal.getX(), currentGoal.getY());

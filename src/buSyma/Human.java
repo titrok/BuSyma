@@ -12,6 +12,8 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 public class Human extends Moving{
 	private boolean isCrossing = false;
+	public int timer = 0;
+	public boolean dead = false;
 	public Human(ContinuousSpace<Object> space, Grid<Object> grid, GridPoint dest, Context<Object> context, ArrayList<String> map) {
 		this.space = space;
 		this.grid = grid;
@@ -20,21 +22,41 @@ public class Human extends Moving{
 		this.map = map;
 		this.speed = 0.5f;
 	}	
-	
+
 	public void despawn() {
+		if (grid.getObjectAt(destination.getX(), destination.getY()) instanceof BusShelter) {
+			GridCellNgh<Bus> nghBusCreator = new GridCellNgh<Bus>(grid, currentGoal, Bus.class, 1, 1);
+			List<GridCell<Bus>> busGridCells = nghBusCreator.getNeighborhood(true);
+			int count = 0;
+			for (GridCell<Bus> bus : busGridCells) {
+				if (bus.items().iterator().hasNext()) {
+					count++;
+					Bus b = bus.items().iterator().next();
+					if (b.shouldMove)
+						return;
+					else
+						b.passengers += 1;
+				}
+			}
+			if (count == 0)
+				return;
+		}
+		Stats.nbHumans = Stats.nbHumans + 1;
 		context.remove(this);
 		BuSymaBuilder.addHuman(context, space, grid, map);
 	}
 	
 	public boolean canCross(TrafficLight t) {
-		return (t.red && t.timer < 5);
+		t.pedestrians.add(this);
+		return (t.red);
 	}
 	
 	public boolean canCross(Crossing c) {
-		if (isCrossing)
+		if (isCrossing) {
 			return true;
-		GridCellNgh<TrafficLight> nghSpawnCreator = new GridCellNgh<TrafficLight>(grid, currentGoal, TrafficLight.class, 1, 1);
-		List<GridCell<TrafficLight>> lightGridCells = nghSpawnCreator.getNeighborhood(true);
+		}
+		GridCellNgh<TrafficLight> nghLightCreator = new GridCellNgh<TrafficLight>(grid, currentGoal, TrafficLight.class, 1, 1);
+		List<GridCell<TrafficLight>> lightGridCells = nghLightCreator.getNeighborhood(true);
 		for (GridCell<TrafficLight> light : lightGridCells)
 			if (light.items().iterator().hasNext() && !canCross(light.items().iterator().next()))
 				return false;
@@ -44,6 +66,11 @@ public class Human extends Moving{
 
 	@ScheduledMethod(start=1, interval=1)
 	public void moveTowardsDestination() {
+		timer++;
+		GridPoint pt = grid.getLocation(this);
+		Object t = grid.getObjectAt(pt.getX(), pt.getY());
+		if (t instanceof TrafficLight && ((TrafficLight) t).pedestrians.contains(this))
+			((TrafficLight)t).pedestrians.remove(this);
 		if (super.computeNextGoal())
 			return;
 		Object o = grid.getObjectAt(currentGoal.getX(), currentGoal.getY());

@@ -94,8 +94,6 @@ public class DijkstraCreator {
 	public GridPoint compute(GridPoint destination) {
 		if (way == null) {
 			way = findWay(destination);
-			System.out.println("DIJKSTRA RESULT");
-			System.out.println("Way : " + way);
 		}
 		return way.pop();
 	}

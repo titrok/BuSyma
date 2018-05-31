@@ -13,6 +13,7 @@ import repast.simphony.context.space.grid.GridFactory;
 import repast.simphony.context.space.grid.GridFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.random.RandomHelper;
@@ -82,12 +83,16 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 					add(context, space, grid, new Crossing(), x, y);
 				if (list.get(y).charAt(x) == 'A')
 					add(context, space, grid, new BusShelter(), x, y);
-				if (list.get(y).charAt(x) == 'T')
-					add(context, space, grid, new TrafficLight(), x, y);
+				if (list.get(y).charAt(x) == '2')
+					add(context, space, grid, new TrafficLight(false), x, y);
+				if (list.get(y).charAt(x) == '1')
+					add(context, space, grid, new TrafficLight(true), x, y);
+			
 			}
 		}
-		
-		addHuman(context, space, grid, list);
+		context.add(new Stats());
+		for (int i = 0; i < 5; i++)
+			addHuman(context, space, grid, list);
 		addBus(context, space, grid, list, new GridPoint(0, 10), new GridPoint(18, 10));
 		addBus(context, space, grid, list, new GridPoint(9, 18), new GridPoint(9, 0));
 		return context;
@@ -120,7 +125,7 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 				dest = cell.getPoint();
 			}
 		}
-		if (dest.getX() == width - 1 || dest.getX() == 0 || dest.getY() == height - 1 || dest.getY() == 0) {
+		if (RandomHelper.getUniform().nextBoolean()) {
 			double distance = Double.MAX_VALUE;
 			GridCellNgh<BusShelter> shelterCreator = new GridCellNgh<BusShelter>(grid, new GridPoint(0,0), BusShelter.class, width, height);
 			List<GridCell<BusShelter>> shelterGridCells = shelterCreator.getNeighborhood(true);
