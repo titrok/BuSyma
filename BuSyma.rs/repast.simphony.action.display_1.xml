@@ -28,7 +28,7 @@
     </entry>
     <entry>
       <string>buSyma.Building</string>
-      <string>repast.simphony.visualizationOGL2D.DefaultStyleOGL2D</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
       <string>buSyma.Sidewalk</string>
@@ -78,7 +78,7 @@
     </entry>
     <entry>
       <string>buSyma.Building</string>
-      <null/>
+      <string>buSyma.Building.style_1.xml</string>
     </entry>
     <entry>
       <string>buSyma.Sidewalk</string>
@@ -111,7 +111,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-665505243</hashCode>
+    <hashCode>-1535370212</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>

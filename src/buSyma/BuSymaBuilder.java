@@ -110,6 +110,9 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 		add(context, space, grid, new House(), 25, 11);
 		add(context, space, grid, new House(), 26, 15);
 		add(context, space, grid, new Building(), 13, 13);
+		add(context, space, grid, new Building(), 15, 4);
+		add(context, space, grid, new Building(), 3, 5);
+		add(context, space, grid, new Building(), 27, 7);
 		return context;
 	}
 	

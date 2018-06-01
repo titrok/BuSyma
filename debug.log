@@ -1347,3 +1347,17 @@ repast.simphony.space.SpatialException: Target location 28.5 is outside of grid'
 	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
 	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
 	at java.awt.EventDispatchThread.run(Unknown Source)
+ERROR [main] 2018-06-01 21:25:34,900 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.init(Boot.java:79)
+	at saf.core.runtime.Boot.main(Boot.java:246)
+	at repast.simphony.runtime.RepastMain.main(RepastMain.java:43)
+	at buSyma.Main.start(Main.java:10)
+	at buSyma.Main.main(Main.java:15)
+ERROR [main] 2018-06-01 21:25:34,907 saf.core.runtime.Boot - null
+java.lang.NullPointerException
+	at saf.core.runtime.Boot.run(Boot.java:101)
+	at saf.core.runtime.Boot.main(Boot.java:247)
+	at repast.simphony.runtime.RepastMain.main(RepastMain.java:43)
+	at buSyma.Main.start(Main.java:10)
+	at buSyma.Main.main(Main.java:15)
