@@ -75,6 +75,10 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 			{
 				if (list.get(y).charAt(x) == 'X')
 					add(context, space, grid, new Sidewalk(), x, y);
+				if (list.get(y).charAt(x) == 'V')
+					add(context, space, grid, new VerticalRoad(), x, y);
+				if (list.get(y).charAt(x) == 'H')
+					add(context, space, grid, new HorizontalRoad(), x, y);
 				if (list.get(y).charAt(x) == 'R')
 					add(context, space, grid, new Road(), x, y);
 				if (list.get(y).charAt(x) == 'S')
@@ -87,14 +91,25 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 					add(context, space, grid, new TrafficLight(false), x, y);
 				if (list.get(y).charAt(x) == '1')
 					add(context, space, grid, new TrafficLight(true), x, y);
+				if (list.get(y).charAt(x) == 'T')
+					add(context, space, grid, new TrafficLight(true), x, y);
+				
 			
 			}
 		}
 		context.add(new Stats());
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < RunEnvironment.getInstance().getParameters().getInteger("nbHumans"); i++)
 			addHuman(context, space, grid, list);
-		addBus(context, space, grid, list, new GridPoint(0, 10), new GridPoint(18, 10));
+		addBus(context, space, grid, list, new GridPoint(0, 9), new GridPoint(28, 9));
 		addBus(context, space, grid, list, new GridPoint(9, 18), new GridPoint(9, 0));
+		addBus(context, space, grid, list, new GridPoint(19, 0), new GridPoint(19, 18));
+		add(context, space, grid, new House(), 3, 16);
+		add(context, space, grid, new House(), 1, 13);
+		add(context, space, grid, new House(), 7, 12);
+		add(context, space, grid, new House(), 22, 14);
+		add(context, space, grid, new House(), 25, 11);
+		add(context, space, grid, new House(), 26, 15);
+		add(context, space, grid, new Building(), 13, 13);
 		return context;
 	}
 	

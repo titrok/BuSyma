@@ -8,6 +8,8 @@ public class Stats {
 	public static int nbHumans = 0;
 	
 	public Stats() {
+		nbHumans = 0;
+		this.nbTicks = 0;
 	}
 	
 	@ScheduledMethod(start=1, interval=1)

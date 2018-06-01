@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import repast.simphony.context.Context;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
@@ -16,6 +17,7 @@ public class Bus extends Moving{
 	private int timeStopped = 0;
 	private GridPoint spawn;
 	public int passengers = 0;
+	private int nbTicks = 3;
 	public Bus(ContinuousSpace<Object> space, Grid<Object> grid, GridPoint dest, Context<Object> context, ArrayList<String> map, GridPoint spawn) {
 		this.space = space;
 		this.grid = grid;
@@ -24,6 +26,7 @@ public class Bus extends Moving{
 		this.map = map;
 		this.speed = 1f;
 		this.spawn = spawn;
+		this.nbTicks = RunEnvironment.getInstance().getParameters().getInteger("nbTicks");
 	}
 
 	public boolean canCross(TrafficLight t) {
@@ -38,7 +41,7 @@ public class Bus extends Moving{
 	public boolean shouldStop() {
 		if (!shouldMove) {
 			timeStopped++;
-			if (timeStopped > 3) {
+			if (timeStopped > nbTicks) {
 				shouldMove = true;
 				timeStopped = 0;
 				return false;

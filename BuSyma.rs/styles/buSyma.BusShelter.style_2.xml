@@ -17,9 +17,9 @@
     <float>0.0</float>
   </labelColor>
   <color>
+    <float>0.0</float>
+    <float>0.4</float>
     <float>1.0</float>
-    <float>0.0</float>
-    <float>0.0</float>
   </color>
   <colorMax>
     <float>10.0</float>
@@ -36,4 +36,5 @@
     <float>1.0</float>
     <float>1.0</float>
   </colorScale>
+  <iconFile2D>./icons/shelter.PNG</iconFile2D>
 </repast.simphony.visualization.editedStyle.DefaultEditedStyleData2D>
