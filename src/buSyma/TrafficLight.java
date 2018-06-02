@@ -10,10 +10,10 @@ public class TrafficLight {
 	public Set<Human> pedestrians = new HashSet<Human>();
 	public Set<Bus> busses = new HashSet<Bus>() ;
 	private int timer = 0;
-	private boolean methodA = true;
-	public TrafficLight(boolean methodA) {
+	private char method = 'A';
+	public TrafficLight(char method) {
 		this.red = true;
-		this.methodA = methodA;
+		this.method = method;
 	}
 	
 	public boolean shouldLight() {
@@ -41,6 +41,12 @@ public class TrafficLight {
 		if (timer > 5)
 			light();
 	}
+	public void methodC() {
+		if (busses.size() > 0)
+			red = false;
+		else
+			red = true;
+	}
 	
 	public void methodA() {
 		timer++;
@@ -50,9 +56,11 @@ public class TrafficLight {
 	
 	@ScheduledMethod(start=1, interval=1)
 	public void increment() {
-		if (methodA)
+		if (method == 'A')
 			methodA();
-		else
+		else if (method == 'B')
 			methodB();
+		else
+			methodC();
 	}
 }

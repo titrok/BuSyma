@@ -7,7 +7,7 @@
 									
 		/>
 				<parameter name="mapName" displayName="Map Name" type="java.lang.String" 
-						defaultValue="finaltest" 
+						defaultValue="testfinal" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
 									
@@ -19,7 +19,7 @@
 									
 		/>
 				<parameter name="nbHumans" displayName="Number of Humans" type="int" 
-						defaultValue="30" 
+						defaultValue="20" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									

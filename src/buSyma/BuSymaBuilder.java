@@ -87,13 +87,14 @@ public class BuSymaBuilder implements ContextBuilder<Object> {
 					add(context, space, grid, new Crossing(), x, y);
 				if (list.get(y).charAt(x) == 'A')
 					add(context, space, grid, new BusShelter(), x, y);
-				if (list.get(y).charAt(x) == '2')
-					add(context, space, grid, new TrafficLight(false), x, y);
-				if (list.get(y).charAt(x) == '1')
-					add(context, space, grid, new TrafficLight(true), x, y);
 				if (list.get(y).charAt(x) == 'T')
-					add(context, space, grid, new TrafficLight(true), x, y);
-				
+					add(context, space, grid, new TrafficLight('A'), x, y);
+				if (list.get(y).charAt(x) == '1')
+					add(context, space, grid, new TrafficLight('A'), x, y);
+				if (list.get(y).charAt(x) == '2')
+					add(context, space, grid, new TrafficLight('B'), x, y);
+				if (list.get(y).charAt(x) == '3')
+					add(context, space, grid, new TrafficLight('C'), x, y);
 			
 			}
 		}
